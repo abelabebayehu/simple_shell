@@ -7,6 +7,7 @@
 
 void execute_command(char *line);
 void prompt(void);
+extern char **environ;
 
 /**
  * main - Simple UNIX command line interpreter
@@ -70,9 +71,9 @@ void execute_command(char *line)
 	}
 	if (pid == 0) /* Child process */
 	{
-		if (execve(argv[0], argv, NULL) == -1)
+		if (execve(argv[0], argv, environ) == -1)
 		{
-			perror("./shell");
+			fprintf(stderr, "%s: 1: %s: not found\n", "./hsh", argv[0]);
 			exit(EXIT_FAILURE);
 		}
 	}
