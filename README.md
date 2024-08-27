@@ -1,2 +1,2 @@
-# simple_shell
-final project Abel
+# simple_shell program
+final project Abel - Hiwot
