@@ -5,6 +5,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+void execute_command(char *line);
+void prompt(void);
+
 /**
  * main - Simple UNIX command line interpreter
  *
@@ -15,15 +18,12 @@ int main(void)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	pid_t pid;
-	int status;
-	char *argv[2];
 
 	while (1)
 	{
-		printf("#cisfun$ ");
-		nread = getline(&line, &len, stdin);
+		prompt();
 
+		nread = getline(&line, &len, stdin);
 		if (nread == -1) /* Handle EOF (Ctrl+D) */
 		{
 			printf("\n");
@@ -33,30 +33,51 @@ int main(void)
 		/* Remove newline character */
 		line[nread - 1] = '\0';
 
-		/* Prepare arguments for execve */
-		argv[0] = line;
-		argv[1] = NULL;
-
-		pid = fork();
-		if (pid == -1) /* Fork failed */
-		{
-			perror("Error:");
-			continue;
-		}
-		if (pid == 0) /* Child process */
-		{
-			if (execve(argv[0], argv, NULL) == -1)
-			{
-				perror("./shell");
-				exit(EXIT_FAILURE);
-			}
-		}
-		else /* Parent process */
-		{
-			wait(&status);
-		}
+		if (line[0] != '\0') /* Ignore empty commands */
+			execute_command(line);
 	}
 
 	free(line);
 	return (0);
+}
+
+/**
+ * prompt - Displays the shell prompt
+ */
+void prompt(void)
+{
+	printf("#cisfun$ ");
+}
+
+/**
+ * execute_command - Forks a child process to execute a command
+ * @line: The command line to execute
+ */
+void execute_command(char *line)
+{
+	pid_t pid;
+	int status;
+	char *argv[2];
+
+	argv[0] = line;
+	argv[1] = NULL;
+
+	pid = fork();
+	if (pid == -1) /* Fork failed */
+	{
+		perror("Error:");
+		return;
+	}
+	if (pid == 0) /* Child process */
+	{
+		if (execve(argv[0], argv, NULL) == -1)
+		{
+			perror("./shell");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else /* Parent process */
+	{
+		wait(&status);
+	}
 }
