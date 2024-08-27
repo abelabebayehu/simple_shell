@@ -4,10 +4,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
-void execute_command(char *line);
-void prompt(void);
-extern char **environ;
+#include "shell.h"
 
 /**
  * main - Simple UNIX command line interpreter
