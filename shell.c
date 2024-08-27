@@ -70,7 +70,7 @@ void execute_command(char *line)
 	{
 		if (execve(argv[0], argv, environ) == -1)
 		{
-			fprintf(stderr, "%s: 1: %s: not found\n", "./hsh", argv[0]);
+			perror("./shell");
 			exit(EXIT_FAILURE);
 		}
 	}
