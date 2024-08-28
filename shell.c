@@ -44,7 +44,7 @@ int main(void)
  */
 void prompt(void)
 {
-	printf("#cisfun$ ");
+	printf("($) ");
 }
 
 /**
@@ -70,7 +70,7 @@ void execute_command(char *line)
 	{
 		if (execve(argv[0], argv, environ) == -1)
 		{
-			perror("./shell");
+			perror("./hsh");
 			exit(EXIT_FAILURE);
 		}
 	}
