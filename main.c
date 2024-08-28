@@ -29,7 +29,7 @@ int main(int argc, char **argv, char **envp)
 
 		if (execute_command(input, envp) == -1)
 		{
-			/* Proper error output using argv[0] */
+			/* Error handling */
 			fprintf(stderr, "%s: %s: No such file or directory\n", argv[0], input);
 		}
 

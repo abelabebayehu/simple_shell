@@ -27,7 +27,8 @@ int execute_command(char *command, char **envp)
 		/* Child process */
 		if (execve(command, argv, envp) == -1)
 		{
-			perror(command);
+			/* Print error message in the correct format */
+			fprintf(stderr, "%s: No such file or directory\n", "./hsh");
 			exit(EXIT_FAILURE);
 		}
 	}
