@@ -10,7 +10,7 @@
  */
 int main(int argc, char **argv, char **envp)
 {
-	char *input;
+	char *input
 
 	(void)argc;
 
